@@ -1,37 +1,34 @@
 
+import Newdo from "./Newdo";
 
-import Kegiatan from "./Kegiatan";
-import {Sumber} from "./Sumber";
 
-const sty = {bayang:{
-  width:'100%',
-  height:'5%',
- 
-  
-  boxShadow: "1px 3px #a8a8a8",
-  marginBottom: '2rem'
-},
-page:{
-  height:'80rem',
-  width:'100%',
-  border: '5px solid black',
-  margin: 'auto'
 
-}
-
-} 
 function App() {
   return (
-    <div style={sty.page}>
-      <div style={sty.bayang}> <h1 style={{marginLeft:10+"px"}}>To Do App</h1></div>
-
-   
- 
- {Sumber.map((Sumber)=><Kegiatan Sumber={Sumber}/>)}
- </div>
+    <html>
+      <head>
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+          crossorigin="anonymous"
+        />
+      </head>
+      <body>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+          crossorigin="anonymous"
+        ></script>
+       <div class="card mx-auto mt-5 p-5 shadow-lg p-3 mb-5 bg-body rounded" style={{width:50+"%"}}>
+          <h1 className="card-title text-center" style={{}}> todos</h1>
+         
+        <Newdo />
+       
+        </div>
+      </body>
+    </html>
   );
 }
-
-
 
 export default App;
