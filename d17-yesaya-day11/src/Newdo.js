@@ -33,17 +33,15 @@ function Newdo() {
     const index = data.findIndex((obj) => obj.id == id);
 
     let lawan = data[index].completed;
-   
 
-  
-  let newArr = [...data];
-  newArr[index] = {data,id:data[index].id,
-        title:data[index].title,
-      completed:!lawan}
-  setData(newArr); 
-
-  
-   
+    let newArr = [...data];
+    newArr[index] = {
+      data,
+      id: data[index].id,
+      title: data[index].title,
+      completed: !lawan,
+    };
+    setData(newArr);
   };
   const Hapus = (id) => {
     setData((oldData) =>
@@ -74,18 +72,18 @@ function Newdo() {
 
       Baru(Todobaru);
     }
-    let baru = '';
+    let baru = "";
     setValue(baru);
     document.getElementById("inputtext").value = "";
   };
 
   return (
     <div>
-      <div className=" row mx-auto">
+      <div className=" row mx-auto  py-5">
         <div class="input-group mb-3 mx-auto">
           <input
             type="text"
-            className="border-0"
+            className="border-0 shadow-sm p-3 rounded"
             id="inputtext"
             style={{ width: 86 + "%" }}
             type="text"
@@ -103,7 +101,7 @@ function Newdo() {
         </div>
       </div>
 
-      <ListTodo datas={data} hapusDo={Hapus} coret={Coret}  />
+      <ListTodo datas={data} hapusDo={Hapus} coret={Coret} />
     </div>
   );
 }
