@@ -3,7 +3,7 @@ import Newdo from "./Newdo";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import About_app from "./About_app";
 import About_author from "./About_author";
-import Nav from "./Nav";
+import form from "./form";
 import PageNotFound from "./PageNotFound";
 
 function App() {
@@ -38,19 +38,19 @@ function App() {
           </h1>
           <br />
           <BrowserRouter>
-          <ul className="nav nav-tabs" id="myTab" role="tablist">
-            <li className="nav-item mx-auto " role="presentation">
-              <button
-                className="nav-link "
-                id="home-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#home"
-                type="button"
-                role="tab"
-                aria-controls="home"
-                aria-selected="true"
-              >
-                <Link
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li className="nav-item mx-auto " role="presentation">
+                <button
+                  className="nav-link "
+                  id="home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#home"
+                  type="button"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
+                >
+                  <Link
                     to="/"
                     className="nav-link "
                     aria-current="page"
@@ -58,44 +58,42 @@ function App() {
                   >
                     Home
                   </Link>
-              </button>
-            </li>
-            <li className="nav-item mx-auto" role="presentation">
-              <button
-                className="nav-link"
-                id="profile-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#profile"
-                type="button"
-                role="tab"
-                aria-controls="profile"
-                aria-selected="false"
-              >
-               <Link to="/About_app" className="nav-link" href="#">
+                </button>
+              </li>
+              <li className="nav-item mx-auto" role="presentation">
+                <button
+                  className="nav-link"
+                  id="profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >
+                  <Link to="/About_app" className="nav-link" href="#">
                     About App
                   </Link>
-              </button>
-            </li>
-            <li className="nav-item mx-auto" role="presentation">
-              <button
-                className="nav-link "
-                id="contact-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#contact"
-                type="button"
-                role="tab"
-                aria-controls="contact"
-                aria-selected="false"
-              >
-               <Link to="/About_author" className="nav-link" href="#">
+                </button>
+              </li>
+              <li className="nav-item mx-auto" role="presentation">
+                <button
+                  className="nav-link "
+                  id="contact-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#contact"
+                  type="button"
+                  role="tab"
+                  aria-controls="contact"
+                  aria-selected="false"
+                >
+                  <Link to="/About_author" className="nav-link" href="#">
                     About Author
                   </Link>
-              </button>
-            </li>
-          </ul>
-         
+                </button>
+              </li>
+            </ul>
 
-         
             {/* <ul className="nav nav-pills nav-fill">
               <li className="nav-item">
                 <a>
@@ -129,6 +127,7 @@ function App() {
               <Route exact path="/" component={Newdo}></Route>
               <Route path="/About_app" component={About_app}></Route>
               <Route path="/About_author" component={About_author}></Route>
+              <Route path="/form" component={form}></Route>
 
               <Route component={PageNotFound} />
             </Switch>
