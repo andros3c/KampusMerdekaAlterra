@@ -1,3 +1,6 @@
+import { useSelector,useDispatch } from "react-redux";
+import { Hapus } from "./store/olahdata";
+
 function strip(a) {
   if (a == true) {
     return "line-through";
@@ -10,27 +13,30 @@ function check(b) {
     return true;
   }
 }
-const ListTodo = ({ datas, hapusDo, coret }) => {
+const ListTodo = (props) => {
+  const data = useSelector((state)=>state.data.data)
+  const dispatch = useDispatch()
+
   return (
     <div>
-      {datas.map((datas) => (
-        <div className="row mx-auto " key={datas.id}>
+      {data.map((data) => (
+        <div className="row mx-auto " key={data.id}>
           <div className="col-1">
             <input
               type="checkbox"
-              defaultChecked={check(datas.completed)}
-              onClick={() => coret(datas.id)}
+              defaultChecked={check(data.completed)}
+              onClick={() => this.props.coret(data.id)}
             />
           </div>
           <div className="col-9 ">
-            <p style={{ textDecoration: strip(datas.completed) }}>
-              {datas.title}
+            <p style={{ textDecoration: strip(data.completed) }}>
+              {data.title}
             </p>
           </div>
           <div className="col-2">
             <button
               className="btn btn-outline-danger "
-              onClick={() => hapusDo(datas.id)}
+              onClick={()=>{dispatch(Hapus(data.id))}}
             >
               Hapus
             </button>

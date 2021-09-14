@@ -1,33 +1,16 @@
 import React, { useState } from "react";
 import ListTodo from "./ListTodo";
 import { uuid } from "uuidv4";
+import { useSelector,useDispatch } from "react-redux";
 
-const alldo = [
-  {
-    id: uuid(),
-    title: "Membuat Komponen",
-    completed: true,
-  },
-  {
-    id: uuid(),
-    title: "Unit Testing",
-    completed: false,
-  },
-  {
-    id: uuid(),
-    title: "Setup Development Environment",
-    completed: true,
-  },
-  {
-    id: uuid(),
-    title: "Deploy ke server",
-    completed: false,
-  },
-];
+
 
 function Newdo() {
-  const [data, setData] = useState(alldo);
+  // const [data, setData] = useState(alldo);
   const [value, setValue] = useState();
+  const data = useSelector((state)=>state.data.data)
+  const dispatch = useDispatch()
+  
 
   const Coret = (id) => {
     const index = data.findIndex((obj) => obj.id == id);

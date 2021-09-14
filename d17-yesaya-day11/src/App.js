@@ -5,10 +5,14 @@ import About_app from "./About_app";
 import About_author from "./About_author";
 import form from "./form";
 import PageNotFound from "./PageNotFound";
-
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import {store,persistor} from './store/store'
 function App() {
   return (
     <html>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
       <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -122,8 +126,9 @@ function App() {
                 </a>
               </li>
             </ul> */}
-
+ 
             <Switch>
+             
               <Route exact path="/" component={Newdo}></Route>
               <Route path="/About_app" component={About_app}></Route>
               <Route path="/About_author" component={About_author}></Route>
@@ -134,6 +139,8 @@ function App() {
           </BrowserRouter>
         </div>
       </body>
+      </PersistGate>
+      </Provider>
     </html>
   );
 }

@@ -26,7 +26,7 @@ const Form = () => {
        console.log("Data",Data)}
        
        const handleChange=(e)=>{
-           if(e.target.nama)
+           if(e.target.nama){}
        }
   
   return (
@@ -35,7 +35,7 @@ const Form = () => {
       <h1 className="text-center fs-3">Pendaftaran Peserta Coding Bootcamp</h1>
       <br/>
       <br/>
-      <form onSubmit={handleSubmit}>
+      <form >
         <label className="form-label">Nama Lengkap:</label>
         <br />
         <input className="form-control" name="nama" type="text" required onChange={handleInput} value={Data.judul}/>
