@@ -17,6 +17,7 @@ const ListPassenger = props => {
                         key={item.id}
                         data={item}
                         hapusPengunjung={props.hapusPengunjung}
+                        update={props.update}
                     />
                 ))}
             </table>
