@@ -2,9 +2,26 @@ import { Component, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PassengerInput from "./PassengerInput";
 import ListPassenger from "./ListPassenger";
+
 import Header from "./Header";
-import { gql, useQuery, useLazyQuery, useMutation } from "@apollo/client";
-import Updatetamp from "./Update"
+import {
+  gql,
+  useQuery,
+  useLazyQuery,
+  useMutation,
+  useSubscription,
+} from "@apollo/client";
+
+const querying = gql`
+  query MyQuery($id: Int_comparison_exp = {}) {
+    anggota(where: { id: $id }, distinct_on: id) {
+      id
+      jenis_kelamin
+      nama
+      umur
+    }
+  }
+`;
 
 const DELETE_ANGGOTA_BYID = gql`
   mutation MyMutation($id: Int!) {
@@ -14,9 +31,9 @@ const DELETE_ANGGOTA_BYID = gql`
   }
 `;
 
-const querying = gql`
-  query MyQuery {
-    anggota {
+const subs= gql`
+  subscription MySubscription($id: Int_comparison_exp = {}) {
+    anggota(where: { id: $id }, distinct_on: id) {
       id
       jenis_kelamin
       nama
@@ -45,9 +62,10 @@ const querying2 = gql`
   }
 `;
 
-const Home = () => {
-  const { data, loading, refetch } = useQuery(querying);
-  const [all, setAll] = useState([]);
+const Home = (props) => {
+  const { data, loading } = useSubscription(subs);
+  const {subscribeToMore} = useQuery(querying);
+  const [all, setAll] = useState();
   const [deleteagt, { data3, loading: test, error }] =
     useMutation(DELETE_ANGGOTA_BYID);
   const [dataupdate, { data4, loading: sebentar }] =
@@ -89,7 +107,6 @@ const Home = () => {
 
   const hapusPengunjung = (id) => {
     deleteagt({ variables: { id: id } });
-    refetch();
   };
 
   const updateagt = (id) => {
@@ -100,7 +117,6 @@ const Home = () => {
     });
 
     dataupdate({ variables: { id: id } });
-   
   };
 
   //    const tambahPengunjung = (newUser) => {
@@ -112,6 +128,36 @@ const Home = () => {
   //             data: [...data, newData]
   //         });
   //     };
+
+  const filterjk = (e) => {
+    console.log(e.target.value)
+    subscribeToMore({
+      document: subs,
+      variables: { "id": { "_eq": e.target.value } },
+      updateQuery: (prev, { subscriptionData: { data } }) => {
+        return data;
+      },
+    });
+  };
+
+
+
+
+  const [state, setState] = useState({
+    jenis_kelamin: "",
+    nama: "",
+    umur: "",
+  });
+
+  const update = () => {
+    setState({"nama":props.nama,
+    "umur":props.umur,
+    "jenis_kelamin":props.jenis_kelamin
+    });
+    console.log(state);
+  };
+
+
 
   const input = 0;
   const onId = (e) => {
@@ -131,20 +177,25 @@ const Home = () => {
           name="idsearch"
           id="keyid"
           placeholder="Cari id..."
-          onChange={onId}
+          onChange={filterjk}
         />
-        <button type="submit" name="btnsubmit" onClick={cari}>
-          Submit
-        </button>
+       
       </div>
-      <button>Tampilkan Semua</button>
+     
       <br />
-
-      <input type="radio" id="age1" name="age" value="P" />
+      <p></p>
+      <select name="jenis_kelamin"  value={all}>
+        <option disabled selected>
+          Filter Jenis Kelamin
+        </option>
+        <option value="L">Laki-Laki</option>
+        <option value="P">Perempuan</option>
+      </select>
+      {/* <input type="radio" id="age1" name="age" value="P" />
       <label for="age1">P</label>
       <br />
       <input type="radio" id="age2" name="age" value="L" />
-      <label for="age2">L</label>
+      <label for="age2">L</label> */}
       <br />
       <br />
       <br />
@@ -155,10 +206,26 @@ const Home = () => {
         update={updateagt}
       />
       <PassengerInput data={querying} />
-<br/>
-      <div>
-       <p>{sebentar?<p >Loading...</p>:data4?.anggota_by_pk.jenis_kelamin}</p>
+      <br />
+      <div style={{border:"solid",width:50+"%",margin:"auto"}}>
+       <p>UPDATE DATA</p>
+       <span></span><br/>
+       <input type="text" placeholder="Nama" value={props.nama} onChange={update}/>
+       <br/>
+       <input type="number" placeholder="Umur" value={props.umur}  onChange={update}/>
+       <br/>
+      <select onChange={update} value={props.jenis_kelamin}>
+      <option disabled selected>Pilih</option>
+        <option value="L">Laki-Laki</option>
+        <option value="P">Perempuan</option>
+      </select>
+
+      <button>Update</button>
+   
       </div>
+      <br/>
+      <br/>
+      
     </div>
   );
 };

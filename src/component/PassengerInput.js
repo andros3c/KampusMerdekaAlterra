@@ -42,7 +42,7 @@ function PassengerInput(props) {
        
        
           addTodo({ variables: { "nama": state.nama,"jenis_kelamin": state.jenis_kelamin,"umur":state.umur} });
-          // props.refetch()
+         
         setState({
           ...state,
           nama: "",
@@ -103,10 +103,9 @@ function PassengerInput(props) {
         />
         <p>Masukkan Jenis Kelamin Anda</p>
         <select onChange={onChange} name="jenis_kelamin">
-          <option value="Pria" selected>
-            Pria
-          </option>
-          <option value="Wanita">Wanita</option>
+          <option disabled selected>Pilih</option>
+        <option value="L">Laki-Laki</option>
+        <option value="P">Perempuan</option>
         </select>
         <p></p>
         <button onClick={handleSubmit}>Submit</button>

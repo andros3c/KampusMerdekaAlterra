@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { getMainDefinition } from '@apollo/client/utilities';
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,14 +12,59 @@ import {
   gql
 } from "@apollo/client";
 
-const client = new ApolloClient({
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { split, HttpLink } from '@apollo/client';
+
+const httpLink = new HttpLink({
   uri: 'https://native-ewe-21.hasura.app/v1/graphql',
-  cache: new InMemoryCache(),
   headers:{
     'content-type':'application/json',
     'x-hasura-admin-secret':'qS4OdF25H1ngtb9fFZOLBKqJGgdlMVTxFBI4gvM6TSov3DfL5VjUZKfFkYBBB2S4'
   }
 });
+
+
+const wsLink = new WebSocketLink({
+  uri: 'wss://native-ewe-21.hasura.app/v1/graphql',
+  options: {
+    reconnect: true,
+    connectionParams: {
+      headers:{
+        'content-type':'application/json',
+        'x-hasura-admin-secret':'qS4OdF25H1ngtb9fFZOLBKqJGgdlMVTxFBI4gvM6TSov3DfL5VjUZKfFkYBBB2S4'
+      }
+    },
+  },
+});
+
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink,
+);
+
+const client = new ApolloClient({
+  link: splitLink,
+  cache: new InMemoryCache()
+});
+
+// const client = new ApolloClient({
+//   uri: 'https://native-ewe-21.hasura.app/v1/graphql',
+//   cache: new InMemoryCache(),
+//   headers:{
+//     'content-type':'application/json',
+//     'x-hasura-admin-secret':'qS4OdF25H1ngtb9fFZOLBKqJGgdlMVTxFBI4gvM6TSov3DfL5VjUZKfFkYBBB2S4'
+//   }
+// });
+
+
 
 ReactDOM.render(
   
