@@ -12,7 +12,9 @@ function PassengerInput(props) {
       }
     }
   `;
-  const [addTodo, { data, loading, error }] = useMutation(ADD_ANGGOTA,{refetchQueries:[props.data]});
+  const [addTodo, { data, loading, error }] = useMutation(ADD_ANGGOTA, {
+    refetchQueries: [props.data],
+  });
   const [state, setState] = useState({
     jenis_kelamin: "",
     nama: "",
@@ -38,19 +40,22 @@ function PassengerInput(props) {
           umur: state.umur,
           jenis_kelamin: state.jenis_kelamin,
         };
-        
-       
-       
-          addTodo({ variables: { "nama": state.nama,"jenis_kelamin": state.jenis_kelamin,"umur":state.umur} });
-         
+
+        addTodo({
+          variables: {
+            nama: state.nama,
+            jenis_kelamin: state.jenis_kelamin,
+            umur: state.umur,
+          },
+        });
+
         setState({
           ...state,
           nama: "",
           umur: "",
           jenis_Kelamin: "",
+          
         });
-
-       
       }
     } else {
       alert("Data masih ada yang kosong");
@@ -103,9 +108,11 @@ function PassengerInput(props) {
         />
         <p>Masukkan Jenis Kelamin Anda</p>
         <select onChange={onChange} name="jenis_kelamin">
-          <option disabled selected>Pilih</option>
-        <option value="L">Laki-Laki</option>
-        <option value="P">Perempuan</option>
+          <option disabled selected>
+            Pilih
+          </option>
+          <option value="L">Laki-Laki</option>
+          <option value="P">Perempuan</option>
         </select>
         <p></p>
         <button onClick={handleSubmit}>Submit</button>
@@ -116,8 +123,6 @@ function PassengerInput(props) {
       <button className="inputan" onClick={handleBukaInput} style={editMode}>
         Masukkan Data{" "}
       </button>
-
-      
     </div>
   );
 }
